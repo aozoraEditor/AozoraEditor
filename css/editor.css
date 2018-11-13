@@ -85,10 +85,10 @@
 }
 
 
-textarea, #main div, contain {
+textarea, #main div, .contain {
   display:inline-block;
-  width:49vw;
-  height:100%;
+  width:48vw;
+  height:95%;
   vertical-align:top;
   text-align:left;
 }
@@ -100,6 +100,7 @@ textarea{
   outline:none;
   resize:none;
   border:none;
+  font-family: 'Noto Serif JP', sans-serif;
 }
 
 .contain .vertical
@@ -107,9 +108,9 @@ textarea{
     text-align:end;
 }
 
-div#result{
+#result{
   overflow:auto;
-  /*font-family: 'Noto Serif JP', sans-serif;*/
+  font-family: 'Noto Serif JP', sans-serif;
 }
 
 .vertical > #result {
