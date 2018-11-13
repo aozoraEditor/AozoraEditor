@@ -50,6 +50,11 @@ function subTitle(match, p1, p2)
   return title(match, p1, p2, "subTitle");
 }
 
+function getDocument()
+{
+  return $(document);
+}
+
 $(function(){
   marked.setOptions({breaks: true});
   $('#editor').keyup(function(){

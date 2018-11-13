@@ -6,19 +6,24 @@
         
     </head>
     <body style="margin:0;padding:0;">
-        <webview id="webview" src="editor.html" style="width:100vw; height:100vh;"></webview>
+        <webview id="webview" src="editor.html" preload="C:\Users\SayoO\AozoraEditor\js\contents.js"  style="width:100vw; height:100vh;"></webview>
         <button class="js-button" id="pdf">PDF</button>
         <script>
             const fs = require('fs');
             console.log("output");
-            var webview = document.getElementById('webview');
+            var webview = document.querySelector('webview');
+            //webview.send("getHtml");
+            
             var btn = document.getElementById('pdf');
             btn.addEventListener("click", function(){
-                webview.printToPDF({landscape:true}, (error, data) => {
-                    fs.writeFile("test.pdf", data, (error) =>{
-                        console.log("DONE");
-                    });
-                });
+                console.log("send message");
+                console.log(require('electron').ipcRenderer.send('asynchronous-message', "message"));
+                require('electron').ipcRenderer.on('asynchronous-reply-to-main', (event, arg) => { console.log(arg);});
+                // webview.printToPDF({}, (error, data) => {
+                //     fs.writeFile("test.pdf", data, (error) =>{
+                //         console.log("DONE");
+                //     });
+                // });
             });
 
             webview.addEventListener('dom-ready', () =>{
