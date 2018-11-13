@@ -50,12 +50,6 @@ function subTitle(match, p1, p2)
   return title(match, p1, p2, "subTitle");
 }
 
-function newline(match, p1, p2)
-{
-  console.log("input new line code");
-  return "<p>　</p>";
-}
-
 $(function(){
   marked.setOptions({breaks: true});
   var previewWindow = null;
@@ -69,7 +63,7 @@ $(function(){
     html = html.replace(/(.+?)［＃「(.+?)」は大見出し］/g, primaryTitle);
     html = html.replace(/(.+?)［＃「(.+?)」は中見出し］/g, middleTitle);
     html = html.replace(/(.+?)［＃「(.+?)」は小見出し］/g, subTitle);
-    html = html.replace(/\n/g, newline);
+    html = html.replace(/\r?\n/g, '<br>');
     $('#result').html(html);
   });
 
@@ -78,7 +72,19 @@ $(function(){
     $(this).toggleClass('vertical');
   });
 
+  $('textarea').garlic();
+  $('[rel=persist]').garlic();
+
   $('#toPDF').click(function(){
     console.log("click");
+    //printJS('result', 'html');
+    previewWindow = window.open('preview.html', "preview");
+    var html = $('#result').html();
+    console.log(html);
+    // previewWindow.postMessage(html);
+    // var previewWindow_id = $(previewWindow.document).find('#preview_result');
+    // console.log(previewWindow_id.html());
+    // previewWindow_id.val(html);
+    // console.log(previewWindow_id.val());
   });
 });

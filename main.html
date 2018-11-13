@@ -4,11 +4,10 @@
         <meta charset="UTF-8">
         <title>Editor</title>
     </head>
-    <body>
-        <webview id="webview" src="editor.html" style="width:800px; height:800px;" />
+    <body style="margin:0;padding:0;">
+        <webview id="webview" src="editor.html" style="width:100vw; height:100vh;"></webview>
         <script>
             var webview = document.getElementById('webview');
-            webview.insertCSS("width:800px; height: 800px;")
         </script> 
     </body>
 </html>
