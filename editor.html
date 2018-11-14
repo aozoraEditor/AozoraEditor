@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/marked/marked.min.js"></script>
-    <script src="js/editor.js"></script>
-    <link rel="stylesheet" href="css/editor.css" />
-    <link rel="stylesheet" href="css/aozora.css" />
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP|Syncopate:700" rel="stylesheet">
-  </head>
-  <body>
-    <div id="main">
-      <textarea id="editor" class="form-control"></textarea>
-      <div class="contain" style="padding:20px;">
-        <div id="result"></div>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/editor.css" />
+  <link rel="stylesheet" href="css/aozora.css" />
+  <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP|Syncopate:700" rel="stylesheet">
+</head>
+
+<body>
+  <div id="main">
+    <textarea id="editor" class="form-control"></textarea>
+    <div class="contain" style="padding:20px;">
+      <div id="result">test</div>
     </div>
-  </body>
+  </div>
+  <button id="btn">PDF</button>
+  <script src="js/print.js"></script>
+  <script>
+
+    document.getElementById("btn").onclick = () => {
+      console.log("click");
+      var html = document.getElementsByTagName('html')[0].innerHTML;
+      previewHTML(html);
+    };
+  </script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script>window.$ = window.jQuery = require('jquery');</script>
+  <script src="node_modules/marked/marked.min.js"></script>
+  <script src="js/editor.js"></script>
+</body>
+
 </html>
