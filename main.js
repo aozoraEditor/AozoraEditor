@@ -16,8 +16,8 @@ require('electron').ipcMain.on('asynchronous-message', (event, arg) => {
 });
 
 function createWindow(){
-    mainWindow = new BrowserWindow({width: 1200, height: 800});
-    mainWindow.loadURL('file://' + __dirname + '/main.html');
+    mainWindow = new BrowserWindow({width: 1200, height: 800, webPreferences:{nodeIntegration:false}});
+    mainWindow.loadURL('file://' + __dirname + '/editor.html');
     mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', function(){

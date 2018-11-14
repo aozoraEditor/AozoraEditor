@@ -3,10 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <title>Editor</title>
-        
+        <script>
+            function add()
+            {
+                var div_element = document.createElement('div');
+                var body = document.getElementsByTagName('body');
+                console.log(body);
+                body[0].appendChild(div_element);
+                console.log("add");
+            }
+        </script>
     </head>
-    <body style="margin:0;padding:0;">
-        <webview id="webview" src="editor.html" preload="C:\Users\SayoO\AozoraEditor\js\contents.js"  style="width:100vw; height:100vh;"></webview>
+    <body style="margin:0;padding:0;" onload="add();">
+        <div id="main_"></div>
+        <webview id="webview" src="editor.html" preload="js\contents.js"  style="width:100vw; height:100vh;"></webview>
         <button class="js-button" id="pdf">PDF</button>
         <script>
             const fs = require('fs');
