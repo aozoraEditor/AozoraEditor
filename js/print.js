@@ -6,7 +6,8 @@ const fs = require('fs');
 function previewHTML(html) {
     var win = new BrowserWindow({});
     console.log(html);
-    //TODO: remove script, #editor, #btn
+    html = html.replace(/<(.+?)id=\"(editor|btn)\"(()|(.+?))>(()|(.+?))<\/(.+?)>/g, '');
+    html = html.replace(/<script(()|(.+?))>((.|\0|\n)+?)<\/script>/g, '');
     fs.writeFile('preview.html', "<html>" + html + "</html>", (err) => {
         if (err) {
             console.log(err);
