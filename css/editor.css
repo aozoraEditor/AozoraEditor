@@ -84,6 +84,37 @@
   height: 100vh;
 }
 
+.preview#main .contain
+{
+  width:100vw;
+  text-align:center;
+  margin-top:20px;
+}
+
+.preview#main .contain.vertical
+{
+  text-align:center;
+  width:95vw;
+  height: "21cm";
+}
+
+.preview#main #result
+{
+  overflow:initial;
+  height:"29.7cm";
+  width: "21cm";
+}
+
+.preview#main .vertical #result
+{
+  font-size:15px;
+  width:80vw;
+  height: 600px;
+  column-gap: 100px;
+  margin:40px;
+
+}
+
 
 textarea, #main div, .contain {
   display:inline-block;
@@ -137,4 +168,9 @@ textarea{
 {
   text-align:center;
   vertical-align: center;
+}
+
+@page{
+  width: "21cm";
+  height: "27.5cm";
 }

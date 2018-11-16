@@ -1,33 +1,40 @@
-const electron = require('electron');
-const BrowserWindow = electron.remote.BrowserWindow;
-const webContents = electron.webContents;
 const fs = require('fs');
+const puppeteer = require('puppeteer');
 
-function previewHTML(html) {
-    var win = new BrowserWindow({});
-    console.log(html);
-    html = html.replace(/<(.+?)id=\"(editor|btn)\"(()|(.+?))>(()|(.+?))<\/(.+?)>/g, '');
-    html = html.replace(/<script(()|(.+?))>((.|\0|\n)+?)<\/script>/g, '');
-    fs.writeFile('preview.html', "<html>" + html + "</html>", (err) => {
+function previewHTML(html, isVertical = false) {
+    htmltext = html.replace(/<(.+?)id=\"(editor|btn)\"(()|(.+?))>(()|(.+?))<\/(.+?)>/g, '');
+    htmltext = htmltext.replace(/<script(()|(.+?))>((.|\0|\n)+?)<\/script>/g, '');
+    fs.writeFile('preview.html', "<html>" + htmltext + "</html>", (err) => {
         if (err) {
             console.log(err);
             throw err;
         }
         else {
-            console.log(err, "save ../preview.html", html);
+            console.log(err, "save preview.html");
         }
     });
 
-    win.loadURL('file://' + __dirname + '/preview.html');
-
-    var contents = win.webContents;
-    contents.openDevTools();
-
-    contents.printToPDF({}, (error, data) => {
-        fs.writeFile("test.pdf", data, (error) => {
-            console.log("DONE");
-        });
-    });;
-
+    (async () => {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        //await page.setContent(htmltext);
+        //        await page.goto("data:text/html;charset=UTF-8, <html>" + htmltext + "</html>", { waitUntil: 'networkidle2', timeout: 100000 });
+        await page.goto('file://' + __dirname + "/preview.html");
+        await page.evaluateHandle('document.fonts.ready');
+        await page.pdf(
+            {
+                path: "output.pdf",
+                format: "A4",
+                landscape: isVertical,
+                margin: {
+                    top: "1cm",
+                    bottom: "1.5cm",
+                    right: "3cm",
+                    left: "3cm"
+                },
+                preferCssPageSize: true
+            });
+        await browser.close();
+    })();
 
 }

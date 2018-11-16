@@ -15,15 +15,33 @@
       <div id="result">test</div>
     </div>
   </div>
-  <button id="btn">PDF</button>
   <script src="js/print.js"></script>
   <script>
 
-    document.getElementById("btn").onclick = () => {
-      console.log("click");
-      var html = document.getElementsByTagName('html')[0].innerHTML;
-      previewHTML(html);
-    };
+    var html = " ";
+    var isVertical = false;
+    const { Menu, MenuItem } = require('electron').remote;
+    const menu = new Menu();
+    menu.append(new MenuItem({
+      label: 'Export...',
+      click() {
+        console.log("export.");
+        document.getElementById("main").classList.add("preview");
+        isVertical = false;
+        if (document.getElementsByClassName("vertical").length > 0) { isVertical = true; }
+        console.log(isVertical)
+        var html = document.getElementsByTagName('html')[0].innerHTML;
+        previewHTML(html, isVertical);
+        document.getElementById("main").classList.remove("preview");
+      }
+    }));
+
+    window.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      menu.popup({
+        window: require('electron').remote.getCurrentWindow()
+      })
+    });
   </script>
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script>window.$ = window.jQuery = require('jquery');</script>
