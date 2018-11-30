@@ -19,7 +19,13 @@ function previewHTML(html, isVertical = false) {
         const page = await browser.newPage();
         //await page.setContent(htmltext);
         //        await page.goto("data:text/html;charset=UTF-8, <html>" + htmltext + "</html>", { waitUntil: 'networkidle2', timeout: 100000 });
-        await page.goto('file://' + __dirname + "/preview.html");
+        const session = await page.target().createCDPSession();
+        await page.goto('file://' + __dirname + "/preview.html", { waitUntil: ['networkidle0'] });
+        await session.send('DOM.enable');
+        await session.send('CSS.enable');
+        session.on('CSS.fontsUpdated', () => {
+            console.log("udpate fonts");
+        });
         await page.evaluateHandle('document.fonts.ready');
         await page.pdf(
             {
@@ -29,10 +35,8 @@ function previewHTML(html, isVertical = false) {
                 margin: {
                     top: "1cm",
                     bottom: "1.5cm",
-                    right: "3cm",
-                    left: "3cm"
                 },
-                preferCssPageSize: true
+                // preferCssPageSize: true
             });
         await browser.close();
     })();

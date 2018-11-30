@@ -131,7 +131,7 @@ textarea{
   outline:none;
   resize:none;
   border:none;
-  font-family: 'Noto Serif JP', sans-serif;
+  font-family: 'Noto Serif JP', serif;
 }
 
 .contain .vertical
@@ -141,7 +141,7 @@ textarea{
 
 #result{
   overflow:auto;
-  font-family: 'Noto Serif JP', sans-serif;
+  font-family: 'Noto Serif JP', serif;
 }
 
 .vertical > #result {
