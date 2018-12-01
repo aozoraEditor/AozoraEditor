@@ -1,7 +1,9 @@
 "use strict";
 
-const { app, Menu, BrowserWindow } = require('electron');
+const { app, Menu, BrowserWindow, ipcMain } = require('electron');
+const fs = require('fs');
 let mainWindow = null;
+let printWindow = null;
 
 const templateMenu = [
     {
@@ -29,6 +31,29 @@ const templateMenu = [
 function installMenu() {
     let templateMenu;
 }
+
+ipcMain.on('start_pdf', (event, arg) => {
+    console.log(arg);
+    printWindow = new BrowserWindow({ width: 1200, height: 800 });
+    printWindow.loadURL('file://' + __dirname + '/preview.html');
+    //printWindow.loadURL('http://github.com');
+    printWindow.webContents.openDevTools();
+    printWindow.webContents.on('did-finish-load', () => {
+        printWindow.webContents.printToPDF({
+            pageSize: "A4",
+            landscape: true,
+        }, (error, data) => {
+            if (error) throw error;
+            console.log(data);
+            fs.writeFile('test.pdf', data, (error) => {
+                if (error) throw error;
+                console.log("Write PDF");
+                printWindow.close();
+            });
+        });
+    });
+    event.returnValue = "END";
+});
 
 function createWindow() {
     var menu = Menu.buildFromTemplate(templateMenu);
